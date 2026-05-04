@@ -26667,7 +26667,7 @@ MonoBehaviour:
   recordButton: {fileID: 1867150537}
   clientId: 
   clientSecret: 
-  useTestAudio: 1
+  useTestAudio: 0
   testAudioClip: {fileID: 8300000, guid: 06e7bc6a4889da6418dee14ca7748541, type: 3}
 --- !u!4 &1969881590
 Transform:

@@ -1,0 +1,23 @@
+{
+    "asset": "345988dc190337444b0b746122932291",
+    "fileName": "019e2634-b9b6-77a9-a1fd-b2d8093427f4.glb",
+    "prompt": "Create a realistic 3D cappuccino drink object for a cafe kiosk menu.\r\n\r\nThe drink should be served in a tall transparent plastic cup with a clear lid.\r\nIt should have a beautiful layered appearance with milk at the bottom, rich brown coffee in the middle, and thick white foam on top.\r\nThe color contrast between the white milk, brown coffee, and creamy foam should be clearly visible.\r\nA simple cafe-style logo should be visible in the center of the cup.\r\nFocus on the soft foam texture, the smooth coffee gradient, and the clean layered look.\r\n\r\nRequirements:\r\n- realistic cafe drink style\r\n- transparent plastic cup with clear lid\r\n- visible layered milk and coffee color\r\n- thick white foam on top\r\n- clear logo in the center of the cup\r\n- clean and polished 3D object for use in Unity\r\n- suitable as a menu display object\r\n- simple background or no background",
+    "negativePrompt": "",
+    "model": "model3d-tripo-p1",
+    "modelName": "Tripo P1",
+    "customSeed": -1,
+    "w3CTraceId": "",
+    "feedback": 0,
+    "refinementMode": "Generation",
+    "promptImageReferenceGuid": "8fd898b5498b61440abbd2f8e5b64dcd",
+    "modelReferenceGuid": "",
+    "multiviewFrontGuid": "",
+    "multiviewBackGuid": "",
+    "multiviewLeftGuid": "",
+    "multiviewRightGuid": "",
+    "multiviewTopGuid": "",
+    "multiviewBottomGuid": "",
+    "multiviewLeftFrontGuid": "",
+    "multiviewRightFrontGuid": "",
+    "faceLimit": -1
+}

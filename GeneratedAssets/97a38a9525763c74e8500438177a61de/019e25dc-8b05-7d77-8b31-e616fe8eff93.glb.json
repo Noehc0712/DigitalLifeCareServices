@@ -1,0 +1,23 @@
+{
+    "asset": "97a38a9525763c74e8500438177a61de",
+    "fileName": "019e25dc-8b05-7d77-8b31-e616fe8eff93.glb",
+    "prompt": "Fix the 3D iced Americano object so the top of the cup is perfectly level and horizontally aligned.\r\n\r\nThe cup opening and lid should not be tilted or slanted.\r\nMake the transparent plastic cup stand upright with a clean vertical shape.\r\nKeep the dark iced coffee and visible ice cubes, but correct the upper cup rim and lid so they look natural and properly balanced.\r\nThe lid should sit evenly on top of the cup with a smooth circular shape.\r\nPreserve the realistic cafe drink style and transparent plastic material.\r\n\r\nRequirements:\r\n- straight upright cup shape\r\n- top rim perfectly horizontal\r\n- lid evenly aligned and not tilted\r\n- visible ice cubes inside the drink\r\n- realistic dark iced Americano color\r\n- clean and polished 3D object for use in Unity",
+    "negativePrompt": "",
+    "model": "model3d-tripo-p1",
+    "modelName": "Tripo P1",
+    "customSeed": -1,
+    "w3CTraceId": "",
+    "feedback": 0,
+    "refinementMode": "Generation",
+    "promptImageReferenceGuid": "a5b158c21654df24289763ec7d567a2b",
+    "modelReferenceGuid": "",
+    "multiviewFrontGuid": "",
+    "multiviewBackGuid": "",
+    "multiviewLeftGuid": "",
+    "multiviewRightGuid": "",
+    "multiviewTopGuid": "",
+    "multiviewBottomGuid": "",
+    "multiviewLeftFrontGuid": "",
+    "multiviewRightFrontGuid": "",
+    "faceLimit": -1
+}

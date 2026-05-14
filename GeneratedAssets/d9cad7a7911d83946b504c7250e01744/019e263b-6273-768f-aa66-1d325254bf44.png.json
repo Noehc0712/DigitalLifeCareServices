@@ -1,0 +1,28 @@
+{
+    "asset": "d9cad7a7911d83946b504c7250e01744",
+    "fileName": "019e263b-6273-768f-aa66-1d325254bf44.png",
+    "prompt": "Create a realistic yellow decorative wall texture for a cafe interior.\r\n\r\nThe texture should look like a painted panel wall with a warm vivid yellow color.\r\nIt should include simple rectangular panel moldings or embossed frame details across the surface, similar to decorative wall trim.\r\nThe surface should look clean and smooth, with slight shading and depth around the panel lines.\r\nMake the yellow color rich and bright, suitable for a stylish cafe interior.\r\nFocus on a neat, elegant, and slightly classic wall design.\r\n\r\nRequirements:\r\n- realistic wall texture style\r\n- vivid yellow painted surface\r\n- visible rectangular panel patterns\r\n- clean decorative molding detail\r\n- smooth painted finish\r\n- suitable for use as a repeating texture in Unity\r\n- simple and polished appearance\r\n- no extra objects or background",
+    "negativePrompt": "",
+    "model": "flux-2-dev",
+    "modelName": "Flux 2 (Dev)",
+    "customSeed": -1,
+    "w3CTraceId": "",
+    "feedback": 0,
+    "refinementMode": "Generation",
+    "pixelateTargetSize": 0,
+    "pixelateKeepImageSize": false,
+    "pixelatePixelBlockSize": 0,
+    "pixelatePixelGridSize": 0,
+    "pixelateMode": 0,
+    "pixelateOutlineThickness": 0,
+    "doodles": {
+        "m_Items": []
+    },
+    "upscaleFactor": 0,
+    "dimensions": {
+        "width": 1024,
+        "height": 1024
+    },
+    "spriteSheet": false,
+    "duration": 0.0
+}

@@ -1,0 +1,23 @@
+{
+    "asset": "15febd6f7afc3384f830a4e1e16cb900",
+    "fileName": "019e262c-165c-7850-945f-18f3aebf3e89.glb",
+    "prompt": "Create a realistic 3D Mega Coffee storefront sign object for a cafe exterior in Unity.\r\n\r\nThe sign should be a straight front-facing rectangular signboard with a light gray background and a yellow top border.\r\nIt should include large white letters spelling “MEGA COFFEE” and a bold yellow cup-shaped logo in the center.\r\nBelow the main text, include smaller white text reading “BIG SIZE” and “2 SHOT”.\r\nMake the sign look clean, symmetrical, and properly aligned, without any tilt or perspective distortion.\r\nFocus on the contrast between the gray background, white letters, and yellow logo.\r\n\r\nRequirements:\r\n- realistic cafe storefront sign style\r\n- straight front-facing signboard\r\n- light gray background with yellow top border\r\n- clear white “MEGA COFFEE” text\r\n- visible yellow center logo\r\n- clean and polished 3D object for use in Unity\r\n- suitable as a decorative cafe exterior object\r\n- simple background or no background",
+    "negativePrompt": "",
+    "model": "model3d-tripo-p1",
+    "modelName": "Tripo P1",
+    "customSeed": -1,
+    "w3CTraceId": "",
+    "feedback": 0,
+    "refinementMode": "Generation",
+    "promptImageReferenceGuid": "ba5756d34c67fa64088aaef1f7bd1942",
+    "modelReferenceGuid": "",
+    "multiviewFrontGuid": "",
+    "multiviewBackGuid": "",
+    "multiviewLeftGuid": "",
+    "multiviewRightGuid": "",
+    "multiviewTopGuid": "",
+    "multiviewBottomGuid": "",
+    "multiviewLeftFrontGuid": "",
+    "multiviewRightFrontGuid": "",
+    "faceLimit": -1
+}

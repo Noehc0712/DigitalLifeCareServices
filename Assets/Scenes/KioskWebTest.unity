@@ -7015,7 +7015,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1202950535}
         m_TargetAssemblyTypeName: KioskInteraction, Assembly-CSharp
-        m_MethodName: CloseWebView
+        m_MethodName: RequestCloseWebView
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

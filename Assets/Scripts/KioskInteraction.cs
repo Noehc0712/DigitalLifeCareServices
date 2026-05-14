@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class KioskInteraction : MonoBehaviour
 {
@@ -12,6 +13,9 @@ public class KioskInteraction : MonoBehaviour
     private PlayerController playerController;
     private WebViewWindow webViewWindow;
     private bool isWebViewOpen = false;
+
+    // 현재 실제로 열려 있는 키오스크를 저장
+    private static KioskInteraction currentOpenKiosk;
 
     void Start()
     {
@@ -49,12 +53,20 @@ public class KioskInteraction : MonoBehaviour
         {
             if (interactionText != null)
                 interactionText.SetActive(false);
+
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                PerformCloseWebView();
+            }
         }
     }
 
     public void OpenWebView()
     {
+        Debug.Log($"OpenWebView called on {gameObject.name} / ID: {GetInstanceID()}");
+
         isWebViewOpen = true;
+        currentOpenKiosk = this;
 
         if (interactionText != null)
             interactionText.SetActive(false);
@@ -75,8 +87,27 @@ public class KioskInteraction : MonoBehaviour
         }
     }
 
-    public void CloseWebView()
+    // Close 버튼은 이 함수 호출
+    public void RequestCloseWebView()
     {
+        Debug.Log($"RequestCloseWebView called on {gameObject.name} / ID: {GetInstanceID()}");
+
+        // 버튼이 어떤 Kiosk를 가리키고 있든,
+        // 현재 실제로 열려 있는 키오스크를 닫는다.
+        if (currentOpenKiosk != null)
+        {
+            currentOpenKiosk.PerformCloseWebView();
+        }
+        else
+        {
+            Debug.LogWarning("No currentOpenKiosk found.");
+        }
+    }
+
+    private void PerformCloseWebView()
+    {
+        Debug.Log($"PerformCloseWebView called on {gameObject.name} / ID: {GetInstanceID()}");
+
         isWebViewOpen = false;
 
         if (webViewWindow != null)
@@ -85,10 +116,18 @@ public class KioskInteraction : MonoBehaviour
         if (webViewRoot != null)
             webViewRoot.SetActive(false);
 
+        if (EventSystem.current != null)
+            EventSystem.current.SetSelectedGameObject(null);
+
         if (playerController != null)
         {
             playerController.canControl = true;
             playerController.LockCursor();
+        }
+
+        if (currentOpenKiosk == this)
+        {
+            currentOpenKiosk = null;
         }
     }
 }

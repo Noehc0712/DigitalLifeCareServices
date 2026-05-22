@@ -1,0 +1,23 @@
+{
+    "asset": "97a38a9525763c74e8500438177a61de",
+    "fileName": "019e25d8-7dd3-7990-87f4-6781626dff38.glb",
+    "prompt": "Create a realistic 3D iced Americano drink object for a cafe kiosk menu.\r\n\r\nThe drink should be served in a tall transparent plastic cup with a clear lid.\r\nIt should contain dark iced coffee with visible ice cubes throughout the drink.\r\nMake the coffee color rich and deep brown, with a slightly transparent look near the upper and middle areas.\r\nThe ice cubes should be clearly visible and look glossy, cold, and realistic.\r\nA simple white cafe-style logo should be visible in the center of the cup.\r\nFocus on the contrast between the dark coffee, the transparent cup, and the clear ice.\r\n\r\nRequirements:\r\n- realistic cafe drink style\r\n- transparent plastic cup with clear lid\r\n- visible ice cubes inside the drink\r\n- rich dark brown iced Americano color\r\n- visible white logo in the center of the cup\r\n- cold and refreshing appearance\r\n- clean and polished 3D object for use in Unity\r\n- suitable as a menu display object\r\n- simple background or no background",
+    "negativePrompt": "",
+    "model": "model3d-tripo-p1",
+    "modelName": "Tripo P1",
+    "customSeed": -1,
+    "w3CTraceId": "",
+    "feedback": 0,
+    "refinementMode": "Generation",
+    "promptImageReferenceGuid": "a5b158c21654df24289763ec7d567a2b",
+    "modelReferenceGuid": "",
+    "multiviewFrontGuid": "",
+    "multiviewBackGuid": "",
+    "multiviewLeftGuid": "",
+    "multiviewRightGuid": "",
+    "multiviewTopGuid": "",
+    "multiviewBottomGuid": "",
+    "multiviewLeftFrontGuid": "",
+    "multiviewRightFrontGuid": "",
+    "faceLimit": -1
+}

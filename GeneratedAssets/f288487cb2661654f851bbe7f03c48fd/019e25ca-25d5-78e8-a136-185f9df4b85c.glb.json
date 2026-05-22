@@ -1,0 +1,23 @@
+{
+    "asset": "f288487cb2661654f851bbe7f03c48fd",
+    "fileName": "019e25ca-25d5-78e8-a136-185f9df4b85c.glb",
+    "prompt": "Create a realistic 3D Korean-style cup bingsu dessert object for a cafe kiosk menu.\r\n\r\nThe dessert should be served in a tall clear plastic cup.\r\nIt should have a layered structure with a dark red bean layer at the bottom, a thick white creamy or shaved-ice layer, and a crunchy granola layer in the middle.\r\nOn top, add a scoop of light chocolate-colored ice cream with white drizzle, glossy red beans, golden granola, and small white rice cake toppings.\r\nMake the contrast between the white base and the toppings very clear and visually appealing.\r\nFocus on a rich layered texture, realistic ingredient separation, and a premium cafe-style presentation.\r\n\r\nRequirements:\r\n- realistic cafe dessert style\r\n- transparent plastic cup\r\n- clear layered structure\r\n- strong contrast between white base and toppings\r\n- glossy red bean texture\r\n- crunchy granola texture\r\n- clean and polished 3D object for use in Unity\r\n- suitable as a menu display object\r\n- simple background or no background",
+    "negativePrompt": "",
+    "model": "model3d-tripo-p1",
+    "modelName": "Tripo P1",
+    "customSeed": -1,
+    "w3CTraceId": "",
+    "feedback": 0,
+    "refinementMode": "Generation",
+    "promptImageReferenceGuid": "121d5eb2d0cce834b96e827fc868c72e",
+    "modelReferenceGuid": "",
+    "multiviewFrontGuid": "",
+    "multiviewBackGuid": "",
+    "multiviewLeftGuid": "",
+    "multiviewRightGuid": "",
+    "multiviewTopGuid": "",
+    "multiviewBottomGuid": "",
+    "multiviewLeftFrontGuid": "",
+    "multiviewRightFrontGuid": "",
+    "faceLimit": -1
+}

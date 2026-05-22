@@ -1,0 +1,23 @@
+{
+    "asset": "9530fe57828bd084fb2fb0fd1b15a488",
+    "fileName": "019e25d5-3522-7375-a5e1-55c071f0467a.glb",
+    "prompt": "Create a realistic 3D croffle dessert object for a cafe kiosk menu.\r\n\r\nThe dessert should look like a single baked croffle with a crisp waffle pattern and a flaky pastry texture.\r\nIt should have a golden-brown baked color with slightly darker toasted edges.\r\nLight powdered sugar should be sprinkled on top and clearly visible across the surface.\r\nThe croffle should also have a slight buttery or oily sheen so it looks fresh, rich, and warm.\r\nFocus on the contrast between the golden baked pastry and the white powdered sugar.\r\n\r\nRequirements:\r\n- realistic cafe dessert style\r\n- clear croffle shape with waffle grid pattern\r\n- flaky pastry texture\r\n- golden-brown baked surface\r\n- visible powdered sugar on top\r\n- slight buttery glossy texture\r\n- clean and polished 3D object for use in Unity\r\n- suitable as a menu display object\r\n- simple background or no background",
+    "negativePrompt": "",
+    "model": "model3d-tripo-p1",
+    "modelName": "Tripo P1",
+    "customSeed": -1,
+    "w3CTraceId": "",
+    "feedback": 0,
+    "refinementMode": "Generation",
+    "promptImageReferenceGuid": "1c4c59f6eb0c5ff4a87bc94dad664b42",
+    "modelReferenceGuid": "",
+    "multiviewFrontGuid": "",
+    "multiviewBackGuid": "",
+    "multiviewLeftGuid": "",
+    "multiviewRightGuid": "",
+    "multiviewTopGuid": "",
+    "multiviewBottomGuid": "",
+    "multiviewLeftFrontGuid": "",
+    "multiviewRightFrontGuid": "",
+    "faceLimit": -1
+}

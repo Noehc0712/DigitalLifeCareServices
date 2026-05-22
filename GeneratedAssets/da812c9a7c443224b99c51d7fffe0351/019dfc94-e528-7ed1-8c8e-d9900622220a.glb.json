@@ -1,0 +1,23 @@
+{
+    "asset": "da812c9a7c443224b99c51d7fffe0351",
+    "fileName": "019dfc94-e528-7ed1-8c8e-d9900622220a.glb",
+    "prompt": "Create a modern self-service cafe kiosk based on the reference image. The kiosk should be a tall, slim white standing machine with a large vertical touchscreen display. Show a clean and minimal coffee ordering interface on the screen, including menu items such as espresso, latte, and cappuccino with small drink images. The kiosk should look realistic, sleek, and user-friendly, suitable for a cafe environment. Include payment and interaction components near the lower front section, and keep the overall design simple, polished, and professional.",
+    "negativePrompt": "",
+    "model": "model3d-tripo-p1",
+    "modelName": "Tripo P1",
+    "customSeed": -1,
+    "w3CTraceId": "",
+    "feedback": 0,
+    "refinementMode": "Generation",
+    "promptImageReferenceGuid": "222cabde6eb01674aabcaafa80fbdf8c",
+    "modelReferenceGuid": "",
+    "multiviewFrontGuid": "",
+    "multiviewBackGuid": "",
+    "multiviewLeftGuid": "",
+    "multiviewRightGuid": "",
+    "multiviewTopGuid": "",
+    "multiviewBottomGuid": "",
+    "multiviewLeftFrontGuid": "",
+    "multiviewRightFrontGuid": "",
+    "faceLimit": -1
+}

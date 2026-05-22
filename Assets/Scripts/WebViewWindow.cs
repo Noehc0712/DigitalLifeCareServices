@@ -7,10 +7,24 @@ public class WebViewWindow : MonoBehaviour
     public string url = "https://uhuhjin.github.io/digital-life-care-kiosk/";
 
     private WebViewObject webViewObject;
-    private bool hasLoaded = false;
+    private bool isVisible = false;
 
-    void Start()
+    public void ShowWebView()
     {
+        Debug.Log("ShowWebView called");
+        StartCoroutine(ShowWebViewRoutine());
+    }
+
+    IEnumerator ShowWebViewRoutine()
+    {
+        // 남아 있는 웹뷰가 있으면 제거
+        if (webViewObject != null)
+        {
+            Destroy(webViewObject.gameObject);
+            webViewObject = null;
+            yield return null;
+        }
+
         webViewObject = new GameObject("WebViewObject").AddComponent<WebViewObject>();
 
         webViewObject.Init(
@@ -20,37 +34,39 @@ public class WebViewWindow : MonoBehaviour
             hooked: (msg) => Debug.Log("WebView hooked: " + msg)
         );
 
-        webViewObject.SetVisibility(false);
-    }
-
-    public void ShowWebView()
-    {
-        StartCoroutine(ShowWebViewRoutine());
-    }
-
-    IEnumerator ShowWebViewRoutine()
-    {
         Canvas.ForceUpdateCanvases();
         yield return null;
         yield return new WaitForEndOfFrame();
 
         UpdateMargins();
 
-        if (!hasLoaded)
-        {
-            webViewObject.LoadURL(url);
-            hasLoaded = true;
-        }
+        webViewObject.LoadURL(url);
+        yield return null;
 
         webViewObject.SetVisibility(true);
+        isVisible = true;
     }
 
     public void HideWebView()
     {
-        if (webViewObject == null)
+        Debug.Log("HideWebView called");
+
+        isVisible = false;
+
+        if (webViewObject != null)
+        {
+            webViewObject.SetVisibility(false);
+            Destroy(webViewObject.gameObject);
+            webViewObject = null;
+        }
+    }
+
+    void LateUpdate()
+    {
+        if (!isVisible || webViewObject == null)
             return;
 
-        webViewObject.SetVisibility(false);
+        UpdateMargins();
     }
 
     public void UpdateMargins()
@@ -72,11 +88,13 @@ public class WebViewWindow : MonoBehaviour
         webViewObject.SetMargins(left, top, right, bottom);
     }
 
+    void OnDisable()
+    {
+        HideWebView();
+    }
+
     void OnDestroy()
     {
-        if (webViewObject != null)
-        {
-            Destroy(webViewObject.gameObject);
-        }
+        HideWebView();
     }
 }

@@ -1,0 +1,23 @@
+{
+    "asset": "ed98c4514b1b4ac43a2b05dd926e4ffd",
+    "fileName": "019e25e1-0cf5-7fe6-87c1-1c5617a698c8.glb",
+    "prompt": "Create a realistic 3D hot Americano drink object for a cafe kiosk menu.\r\n\r\nThe drink should be served in a tall white paper cup.\r\nIt should contain hot black coffee visible at the top, with a soft layer of light brown foam or small bubbles on the surface.\r\nMake the coffee look hot, fresh, and rich, with the bubbles clearly visible to show it is a freshly prepared hot drink.\r\nA bold yellow cafe-style logo should be clearly visible in the center of the cup.\r\nFocus on the contrast between the clean white cup, the warm coffee surface, and the bright yellow logo.\r\n\r\nRequirements:\r\n- realistic cafe drink style\r\n- tall white paper cup\r\n- visible hot coffee surface at the top\r\n- light brown foam or bubble texture on the coffee\r\n- clear yellow logo in the center of the cup\r\n- warm and fresh hot Americano appearance\r\n- clean and polished 3D object for use in Unity\r\n- suitable as a menu display object\r\n- simple background or no background",
+    "negativePrompt": "",
+    "model": "model3d-tripo-p1",
+    "modelName": "Tripo P1",
+    "customSeed": -1,
+    "w3CTraceId": "",
+    "feedback": 0,
+    "refinementMode": "Generation",
+    "promptImageReferenceGuid": "bdbe09860ad5cd14cab23ead67ee6cf1",
+    "modelReferenceGuid": "",
+    "multiviewFrontGuid": "",
+    "multiviewBackGuid": "",
+    "multiviewLeftGuid": "",
+    "multiviewRightGuid": "",
+    "multiviewTopGuid": "",
+    "multiviewBottomGuid": "",
+    "multiviewLeftFrontGuid": "",
+    "multiviewRightFrontGuid": "",
+    "faceLimit": -1
+}

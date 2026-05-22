@@ -1,0 +1,23 @@
+{
+    "asset": "59fe13eb6ee82e64b9bed2007b852d35",
+    "fileName": "019e25bf-cdc2-7aef-b5c9-d8df5b56befe.glb",
+    "prompt": "Create a realistic 3D blueberry yogurt smoothie drink object for a cafe kiosk menu.\r\n\r\nThe drink should be served in a clear plastic take-out cup with a lid and straw.\r\nIt should have a soft purple-pink color inspired by blended blueberries and yogurt.\r\nMake the smoothie look thick, creamy, and refreshing, with a smooth blended texture.\r\nThe blueberry tone should be clearly visible, but still look natural and appetizing.\r\nFocus on the rich smoothie texture, soft color gradients, and realistic cafe-style presentation.\r\n\r\nRequirements:\r\n- realistic cafe drink style\r\n- transparent plastic cup\r\n- smoothie texture should look thick and creamy\r\n- strong blueberry yogurt 느낌 through color and material\r\n- clean and polished 3D object for use in Unity\r\n- suitable as a menu display object\r\n- simple background or no background\n\nUse soft glossy materials for the cup, creamy blended texture for the smoothie, and natural blueberry color variation.",
+    "negativePrompt": "",
+    "model": "model3d-tripo-p1",
+    "modelName": "Tripo P1",
+    "customSeed": -1,
+    "w3CTraceId": "",
+    "feedback": 0,
+    "refinementMode": "Generation",
+    "promptImageReferenceGuid": "ee33d98357ea6ff4195b8fbe49e42884",
+    "modelReferenceGuid": "",
+    "multiviewFrontGuid": "",
+    "multiviewBackGuid": "",
+    "multiviewLeftGuid": "",
+    "multiviewRightGuid": "",
+    "multiviewTopGuid": "",
+    "multiviewBottomGuid": "",
+    "multiviewLeftFrontGuid": "",
+    "multiviewRightFrontGuid": "",
+    "faceLimit": -1
+}

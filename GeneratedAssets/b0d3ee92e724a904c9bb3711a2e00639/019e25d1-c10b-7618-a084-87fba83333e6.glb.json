@@ -1,0 +1,23 @@
+{
+    "asset": "b0d3ee92e724a904c9bb3711a2e00639",
+    "fileName": "019e25d1-c10b-7618-a084-87fba83333e6.glb",
+    "prompt": "Create a realistic 3D cheesecake dessert object for a cafe kiosk menu.\r\n\r\nThe dessert should be a single slice of classic cheesecake with a smooth and simple appearance.\r\nIt should have a golden-brown top surface, a soft creamy white cheesecake body, and a light beige cake base at the bottom.\r\nMake the cheesecake look rich, dense, and creamy, with a clean triangular slice shape.\r\nFocus on the contrast between the golden top, the pale cream filling, and the slightly textured base.\r\nThe overall look should be soft, fresh, and appetizing, like a premium cafe dessert.\r\n\r\nRequirements:\r\n- realistic cafe dessert style\r\n- clear triangular cheesecake slice shape\r\n- smooth creamy white cheesecake texture\r\n- golden-brown baked top\r\n- light beige cake base\r\n- clean and polished 3D object for use in Unity\r\n- suitable as a menu display object\r\n- simple background or no background",
+    "negativePrompt": "",
+    "model": "model3d-tripo-p1",
+    "modelName": "Tripo P1",
+    "customSeed": -1,
+    "w3CTraceId": "",
+    "feedback": 0,
+    "refinementMode": "Generation",
+    "promptImageReferenceGuid": "7c9469b6dba68744e942bcb49777a1ef",
+    "modelReferenceGuid": "",
+    "multiviewFrontGuid": "",
+    "multiviewBackGuid": "",
+    "multiviewLeftGuid": "",
+    "multiviewRightGuid": "",
+    "multiviewTopGuid": "",
+    "multiviewBottomGuid": "",
+    "multiviewLeftFrontGuid": "",
+    "multiviewRightFrontGuid": "",
+    "faceLimit": -1
+}

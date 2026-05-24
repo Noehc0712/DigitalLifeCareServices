@@ -4,23 +4,18 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using UnityEngine;
 
-public class MenuData
-{
-    public int index;
-    public string name;
-    public string[] keywords;
-    public string[] supportedOptions;
-}
-public class OptionInfo
-{
-    public string category;
-    public string value;
-    public OptionInfo(string c, string v) { category = c; value = v; }
-}
+public class MenuData { public int index; public string name; public string[] keywords; public string[] supportedOptions; }
+public class OptionInfo { public string category; public string value; public OptionInfo(string c, string v) { category = c; value = v; } }
+public class ParsedOrder { public bool isSuccess; public bool isCancel; public string finalDataFormat; public string displayText; public string menuName; }
+
+// 위치(거리) 기반 매칭을 위한 보조 클래스들
+public class MenuMatch { public int start; public int end; public MenuData menu; }
+public class OptMatch { public int start; public int end; public string category; public string value; }
+public class QtyMatch { public int start; public int end; public int count; }
+public class CancelMatch { public int start; public int end; }
 
 public class OrderParser : MonoBehaviour
 {
-    // 메뉴 리스트 - 메뉴 인덱스, 메뉴명, 인식 키워드, 옵션 목록
     private List<MenuData> menuDatabase = new List<MenuData>()
     {
         new MenuData {
@@ -37,129 +32,151 @@ public class OrderParser : MonoBehaviour
             supportedOptions = new string[] { "설탕" } },
     };
 
-    // 각 카테고리별 [기본값] 설정
     private Dictionary<string, string> defaultOptions = new Dictionary<string, string>()
     {
-        { "얼음양", "보통" },
-        { "샷추가", "기본" },
-        { "원두", "기본" },
-        { "설탕", "기본" }
+        { "얼음양", "보통" }, { "샷추가", "기본" }, { "원두", "기본" }, { "설탕", "기본" }
     };
 
-    // 옵션 키워드 사전 (키워드 : (카테고리, 변환될 표준 세부옵션명))
     private Dictionary<string, OptionInfo> optionDictionary = new Dictionary<string, OptionInfo>()
     {
-        { "얼음적게", new OptionInfo("얼음양", "적게") },
-        { "얼음빼", new OptionInfo("얼음양", "적게") },
-
-        { "샷추가", new OptionInfo("샷추가", "1샷추가") },
-        { "샷하나", new OptionInfo("샷추가", "1샷추가") },
-        { "추가", new OptionInfo("샷추가", "1샷추가") },
-
-        { "디카페인", new OptionInfo("원두", "디카페인") },
-        { "논카페인", new OptionInfo("원두", "디카페인") },
-
-        { "설탕빼", new OptionInfo("설탕", "없음") },
-        { "안달게", new OptionInfo("설탕", "없음") },
-        { "안달기", new OptionInfo("설탕", "없음") },
-        { "설탕없이", new OptionInfo("설탕", "없음") },
-        { "설탕없", new OptionInfo("설탕", "없음") },
-        { "달게", new OptionInfo("설탕", "기본") },
-        { "달기", new OptionInfo("설탕", "기본") },
-        { "설탕넣어", new OptionInfo("설탕", "기본") },
-        { "설탕기본", new OptionInfo("설탕", "기본") },
-        { "설탕있", new OptionInfo("설탕", "기본") }
+        { "얼음적게", new OptionInfo("얼음양", "적게") }, { "얼음빼", new OptionInfo("얼음양", "적게") },
+        { "샷추가", new OptionInfo("샷추가", "1샷추가") }, { "샷하나", new OptionInfo("샷추가", "1샷추가") }, { "추가", new OptionInfo("샷추가", "1샷추가") },
+        { "디카페인", new OptionInfo("원두", "디카페인") }, { "논카페인", new OptionInfo("원두", "디카페인") },
+        { "설탕빼", new OptionInfo("설탕", "없음") }, { "안달게", new OptionInfo("설탕", "없음") },
+        { "안달기", new OptionInfo("설탕", "없음") }, { "설탕없이", new OptionInfo("설탕", "없음") }, { "설탕없", new OptionInfo("설탕", "없음") },
+        { "달게", new OptionInfo("설탕", "기본") }, { "달기", new OptionInfo("설탕", "기본") },
+        { "설탕넣어", new OptionInfo("설탕", "기본") }, { "설탕기본", new OptionInfo("설탕", "기본") }, { "설탕있", new OptionInfo("설탕", "기본") }
     };
 
-    // 수량 변환 사전
     private Dictionary<string, int> numberDictionary = new Dictionary<string, int>()
     {
         { "한", 1 }, { "하나", 1 }, { "일", 1 }, { "두", 2 }, { "둘", 2 }, { "이", 2 },
-        { "세", 3 }, { "셋", 3 }, { "삼", 3 }, { "네", 4 }, { "넷", 4 }, { "사", 4 },
-        { "다섯", 5 }, { "오", 5 }
+        { "세", 3 }, { "셋", 3 }, { "삼", 3 }, { "네", 4 }, { "넷", 4 }, { "사", 4 }, { "다섯", 5 }, { "오", 5 }
     };
 
-    public string AnalyzeOrderText(string sttText)
+    private string[] cancelKeywords = new string[] { "취소", "빼", "제외", "지워", "잘못" };
+
+    public List<ParsedOrder> AnalyzeOrderText(string sttText)
     {
+        List<ParsedOrder> results = new List<ParsedOrder>();
         string rawText = sttText.Replace(" ", "");
 
-        MenuData detectedMenuData = null;
-        int detectedCount = 1;
-
+        List<MenuMatch> menuMatches = new List<MenuMatch>();
         foreach (var menu in menuDatabase)
         {
-            foreach (var keyword in menu.keywords)
+            foreach (var kw in menu.keywords)
             {
-                if (rawText.Contains(keyword))
+                int idx = rawText.IndexOf(kw);
+                while (idx != -1)
                 {
-                    detectedMenuData = menu;
-                    break;
+                    menuMatches.Add(new MenuMatch { start = idx, end = idx + kw.Length, menu = menu });
+                    idx = rawText.IndexOf(kw, idx + kw.Length);
                 }
             }
-            if (detectedMenuData != null) break;
         }
+        menuMatches = menuMatches.OrderBy(m => m.start).ThenByDescending(m => m.end - m.start).ToList();
+        List<MenuMatch> validMenus = new List<MenuMatch>();
+        int lastMenuEnd = -1;
+        foreach (var m in menuMatches) { if (m.start >= lastMenuEnd) { validMenus.Add(m); lastMenuEnd = m.end; } }
 
-        if (detectedMenuData == null)
-        {
-            return "0,메뉴인식실패,0,기본";
-        }
+        if (validMenus.Count == 0) return results;
 
-        Dictionary<string, string> finalOptionsMap = new Dictionary<string, string>();
-        if (detectedMenuData.supportedOptions != null)
-        {
-            foreach (string category in detectedMenuData.supportedOptions)
-            {
-                finalOptionsMap[category] = defaultOptions[category];
-            }
-        }
-
+        List<OptMatch> optMatches = new List<OptMatch>();
         foreach (var opt in optionDictionary)
         {
-            if (rawText.Contains(opt.Key))
-            {
-                string category = opt.Value.category;
-                string value = opt.Value.value;
-
-                if (finalOptionsMap.ContainsKey(category))
-                {
-                    finalOptionsMap[category] = value;
-                }
-            }
+            int idx = rawText.IndexOf(opt.Key);
+            while (idx != -1) { optMatches.Add(new OptMatch { start = idx, end = idx + opt.Key.Length, category = opt.Value.category, value = opt.Value.value }); idx = rawText.IndexOf(opt.Key, idx + opt.Key.Length); }
         }
+        optMatches = optMatches.OrderBy(o => o.start).ThenByDescending(o => o.end - o.start).ToList();
+        List<OptMatch> validOpts = new List<OptMatch>();
+        int lastOptEnd = -1;
+        foreach (var o in optMatches) { if (o.start >= lastOptEnd) { validOpts.Add(o); lastOptEnd = o.end; } }
 
-        Match numberMatch = Regex.Match(rawText, @"\d+");
-        if (numberMatch.Success)
+        List<QtyMatch> qtyMatches = new List<QtyMatch>();
+        foreach (var num in numberDictionary)
         {
-            detectedCount = int.Parse(numberMatch.Value);
+            int idx = rawText.IndexOf(num.Key);
+            while (idx != -1) { qtyMatches.Add(new QtyMatch { start = idx, end = idx + num.Key.Length, count = num.Value }); idx = rawText.IndexOf(num.Key, idx + num.Key.Length); }
         }
-        else
+        MatchCollection matches = Regex.Matches(rawText, @"\d+");
+        foreach (Match m in matches) { qtyMatches.Add(new QtyMatch { start = m.Index, end = m.Index + m.Length, count = int.Parse(m.Value) }); }
+
+        qtyMatches = qtyMatches.OrderBy(q => q.start).ThenByDescending(q => q.end - q.start).ToList();
+        List<QtyMatch> validQtys = new List<QtyMatch>();
+        int lastQtyEnd = -1;
+        foreach (var q in qtyMatches) { if (q.start >= lastQtyEnd) { validQtys.Add(q); lastQtyEnd = q.end; } }
+
+        List<CancelMatch> cancelMatches = new List<CancelMatch>();
+        foreach (string c in cancelKeywords)
         {
-            foreach (var num in numberDictionary)
-            {
-                if (rawText.Contains(num.Key))
-                {
-                    detectedCount = num.Value;
-                    break;
-                }
-            }
+            int idx = rawText.IndexOf(c);
+            while (idx != -1) { cancelMatches.Add(new CancelMatch { start = idx, end = idx + c.Length }); idx = rawText.IndexOf(c, idx + c.Length); }
         }
 
-        List<string> finalOptionValues = new List<string>();
-        if (detectedMenuData.supportedOptions != null && detectedMenuData.supportedOptions.Length > 0)
+        var menuOptMap = new Dictionary<MenuMatch, Dictionary<string, string>>();
+        var menuQtyMap = new Dictionary<MenuMatch, int>();
+        var menuCancelMap = new Dictionary<MenuMatch, bool>();
+
+        foreach (var m in validMenus)
         {
-            foreach (string category in detectedMenuData.supportedOptions)
-            {
-                finalOptionValues.Add(finalOptionsMap[category]);
-            }
-        }
-        else
-        {
-            finalOptionValues.Add("옵션없음");
+            menuOptMap[m] = new Dictionary<string, string>();
+            if (m.menu.supportedOptions != null) foreach (var cat in m.menu.supportedOptions) menuOptMap[m][cat] = defaultOptions[cat];
+            menuQtyMap[m] = 1;
+            menuCancelMap[m] = false;
         }
 
-        string optionString = string.Join(",", finalOptionValues);
-        string finalDataFormat = $"{detectedMenuData.index},{detectedMenuData.name},{detectedCount},{optionString}";
+        foreach (var opt in validOpts)
+        {
+            var closestMenu = GetClosestMenu(opt.start, opt.end, validMenus);
+            if (closestMenu != null && closestMenu.menu.supportedOptions != null && closestMenu.menu.supportedOptions.Contains(opt.category)) menuOptMap[closestMenu][opt.category] = opt.value;
+        }
+        foreach (var qty in validQtys)
+        {
+            var closestMenu = GetClosestMenu(qty.start, qty.end, validMenus);
+            if (closestMenu != null) menuQtyMap[closestMenu] = qty.count;
+        }
+        foreach (var cancel in cancelMatches)
+        {
+            var closestMenu = GetClosestMenu(cancel.start, cancel.end, validMenus);
+            if (closestMenu != null) menuCancelMap[closestMenu] = true;
+        }
 
-        return finalDataFormat;
+        foreach (var m in validMenus)
+        {
+            ParsedOrder po = new ParsedOrder();
+            po.isSuccess = true;
+            po.menuName = m.menu.name;
+            po.isCancel = menuCancelMap[m];
+            int count = menuQtyMap[m];
+
+            List<string> finalOptionValues = new List<string>();
+            if (m.menu.supportedOptions != null && m.menu.supportedOptions.Length > 0)
+                foreach (string category in m.menu.supportedOptions) finalOptionValues.Add(menuOptMap[m][category]);
+            else finalOptionValues.Add("옵션없음");
+
+            string optionString = string.Join(",", finalOptionValues);
+            po.finalDataFormat = $"{m.menu.index},{m.menu.name},{count},{optionString}";
+            po.displayText = $"{m.menu.name} {count}잔  [{optionString}]";
+
+            results.Add(po);
+        }
+
+        return results;
+    }
+
+    private MenuMatch GetClosestMenu(int start, int end, List<MenuMatch> menus)
+    {
+        MenuMatch closest = null;
+        int minDistance = int.MaxValue;
+
+        foreach (var m in menus)
+        {
+            int dist = 0;
+            if (end <= m.start) dist = m.start - end;
+            else if (start >= m.end) dist = start - m.end;
+
+            if (dist < minDistance) { minDistance = dist; closest = m; }
+        }
+        return closest;
     }
 }

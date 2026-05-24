@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,7 +17,6 @@ public class VoiceRecognition : MonoBehaviour
     [Header("API 인증 정보")]
     public string clientId = "Client_ID";
     public string clientSecret = "Client_Secret";
-    [Header("API키가 필요하므로 필요시 말씀해주세요.")]
 
     [Header("테스트 설정")]
     public bool useTestAudio = false;
@@ -28,13 +28,15 @@ public class VoiceRecognition : MonoBehaviour
 
     private OrderParser orderParser;
 
+
+    private List<ParsedOrder> shoppingCart = new List<ParsedOrder>();
+
     void Start()
     {
         orderParser = GetComponent<OrderParser>();
 
         EventTrigger trigger = recordButton.gameObject.GetComponent<EventTrigger>();
-        if (trigger == null)
-            trigger = recordButton.gameObject.AddComponent<EventTrigger>();
+        if (trigger == null) trigger = recordButton.gameObject.AddComponent<EventTrigger>();
 
         EventTrigger.Entry pointerDown = new EventTrigger.Entry();
         pointerDown.eventID = EventTriggerType.PointerDown;
@@ -45,6 +47,8 @@ public class VoiceRecognition : MonoBehaviour
         pointerUp.eventID = EventTriggerType.PointerUp;
         pointerUp.callback.AddListener((data) => { StopRecordingAndSend(); });
         trigger.triggers.Add(pointerUp);
+
+        UpdateCartUI();
     }
 
     private void StartRecording()
@@ -52,7 +56,7 @@ public class VoiceRecognition : MonoBehaviour
         if (useTestAudio && testAudioClip != null)
         {
             isRecording = true;
-            resultText.text = "테스트 파일을 서버로 전송 중입니다...";
+            UpdateStatusText("🔊 테스트 파일을 서버로 전송 중...");
             byte[] wavData = ConvertAudioClipToWav(testAudioClip);
             StartCoroutine(SendAudioToNaver(wavData));
             return;
@@ -60,12 +64,12 @@ public class VoiceRecognition : MonoBehaviour
 
         if (Microphone.devices.Length == 0)
         {
-            resultText.text = "마이크를 찾을 수 없습니다.";
+            UpdateStatusText("⚠️ 마이크를 찾을 수 없습니다.");
             return;
         }
 
         isRecording = true;
-        resultText.text = "듣고 있습니다... (말씀하신 후 손을 떼주세요)";
+        UpdateStatusText("🎤 듣고 있습니다... (누른 채로 말씀하세요)");
         recordedClip = Microphone.Start(null, false, 20, micSampleRate);
     }
 
@@ -81,11 +85,11 @@ public class VoiceRecognition : MonoBehaviour
 
         if (lastPosition < micSampleRate * 0.5f)
         {
-            resultText.text = "음성이 너무 짧습니다. 버튼을 꾹 누르고 말씀해 주세요.";
+            UpdateStatusText("⚠️ 음성이 너무 짧습니다. 꾹 누르고 말씀해 주세요.");
             return;
         }
 
-        resultText.text = "음성을 텍스트로 변환 중입니다...";
+        UpdateStatusText("⏳ 음성 인식 중...");
 
         float[] samples = new float[lastPosition * recordedClip.channels];
         recordedClip.GetData(samples, 0);
@@ -105,7 +109,6 @@ public class VoiceRecognition : MonoBehaviour
         {
             request.uploadHandler = new UploadHandlerRaw(audioData);
             request.downloadHandler = new DownloadHandlerBuffer();
-
             request.SetRequestHeader("Content-Type", "application/octet-stream");
             request.SetRequestHeader("X-NCP-APIGW-API-KEY-ID", clientId);
             request.SetRequestHeader("X-NCP-APIGW-API-KEY", clientSecret);
@@ -117,27 +120,62 @@ public class VoiceRecognition : MonoBehaviour
                 string jsonResponse = request.downloadHandler.text;
                 ClovaResponse response = JsonUtility.FromJson<ClovaResponse>(jsonResponse);
 
-                string rawText = response.text;
-                string formattedData = orderParser.AnalyzeOrderText(rawText);
-                resultText.text = $"[인식 문장]\n{rawText}\n\n[웹 전송용 데이터]\n{formattedData}";
-            }
-            else
-            {
-                resultText.text = $"통신 오류: {request.error}\n{request.downloadHandler.text}";
+                List<ParsedOrder> parsedList = orderParser.AnalyzeOrderText(response.text);
+
+                if (parsedList.Count == 0)
+                {
+                    UpdateStatusText($"[인식 실패] '{response.text}' 메뉴를 찾지 못했습니다.");
+                }
+                else
+                {
+                    foreach (ParsedOrder parsed in parsedList)
+                    {
+                        if (parsed.isCancel)
+                        {
+                            int removeIndex = shoppingCart.FindLastIndex(item => item.menuName == parsed.menuName);
+                            if (removeIndex != -1) shoppingCart.RemoveAt(removeIndex);
+                        }
+                        else
+                        {
+                            shoppingCart.Add(parsed);
+                        }
+                    }
+                    UpdateCartUI();
+                }
             }
         }
     }
 
-    [Serializable]
-    private class ClovaResponse
+    private void UpdateCartUI()
     {
-        public string text;
+        if (shoppingCart.Count == 0)
+        {
+            resultText.text = "\n\n<color=#aaaaaa>장바구니가 비어있습니다.</color>\n\n<size=80%>버튼을 누르고 메뉴를 말씀해 주세요!</size>";
+            return;
+        }
+
+        string uiText = "<color=#333333><b>=== 🛒 주문 목록 ===</b></color>\n\n";
+
+        for (int i = 0; i < shoppingCart.Count; i++)
+        {
+            uiText += $"<color=#0055ff>{i + 1}.</color> {shoppingCart[i].displayText}\n";
+            uiText += $"<size=60%><color=#888888>   데이터: {shoppingCart[i].finalDataFormat}</color></size>\n\n";
+        }
+
+        resultText.text = uiText;
     }
+
+    private void UpdateStatusText(string message)
+    {
+        resultText.text = $"<color=#ff5500><b>{message}</b></color>\n\n" + resultText.text;
+    }
+
+    [Serializable]
+    private class ClovaResponse { public string text; }
 
     private byte[] ConvertAudioClipToWav(AudioClip clip)
     {
         int frequency = clip.frequency;
-
         MemoryStream stream = new MemoryStream();
         byte[] header = new byte[44];
         stream.Write(header, 0, 44);

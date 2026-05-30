@@ -31,6 +31,8 @@ public class VoiceRecognition : MonoBehaviour
 
     private List<ParsedOrder> shoppingCart = new List<ParsedOrder>();
 
+    private string currentStatusMsg = "";
+
     void Start()
     {
         orderParser = GetComponent<OrderParser>();
@@ -48,7 +50,7 @@ public class VoiceRecognition : MonoBehaviour
         pointerUp.callback.AddListener((data) => { StopRecordingAndSend(); });
         trigger.triggers.Add(pointerUp);
 
-        UpdateCartUI();
+        UpdateStatusText("버튼을 꾹 누르고 메뉴를 말씀해 주세요!");
     }
 
     private void StartRecording()
@@ -141,25 +143,33 @@ public class VoiceRecognition : MonoBehaviour
                         }
                     }
                     UpdateCartUI();
+                    UpdateStatusText("✅ 처리 완료! 다음 메뉴를 말씀해 주세요.");
                 }
+            }
+            else
+            {
+                UpdateStatusText($"통신 오류: {request.error}");
             }
         }
     }
 
     private void UpdateCartUI()
     {
+        string uiText = $"<size=110%><color=#ff5500><b>{currentStatusMsg}</b></color></size>\n\n";
+
         if (shoppingCart.Count == 0)
         {
-            resultText.text = "\n\n<color=#aaaaaa>장바구니가 비어있습니다.</color>\n\n<size=80%>버튼을 누르고 메뉴를 말씀해 주세요!</size>";
-            return;
+            uiText += "<color=#aaaaaa>장바구니가 비어있습니다.</color>";
         }
-
-        string uiText = "<color=#333333><b>=== 🛒 주문 목록 ===</b></color>\n\n";
-
-        for (int i = 0; i < shoppingCart.Count; i++)
+        else
         {
-            uiText += $"<color=#0055ff>{i + 1}.</color> {shoppingCart[i].displayText}\n";
-            uiText += $"<size=60%><color=#888888>   데이터: {shoppingCart[i].finalDataFormat}</color></size>\n\n";
+            uiText += "<color=#333333><b>=== 🛒 주문 목록 ===</b></color>\n\n";
+
+            for (int i = 0; i < shoppingCart.Count; i++)
+            {
+                uiText += $"<color=#0055ff>{i + 1}.</color> {shoppingCart[i].displayText}\n";
+                uiText += $"<size=60%><color=#888888>   데이터: {shoppingCart[i].finalDataFormat}</color></size>\n\n";
+            }
         }
 
         resultText.text = uiText;
@@ -167,7 +177,8 @@ public class VoiceRecognition : MonoBehaviour
 
     private void UpdateStatusText(string message)
     {
-        resultText.text = $"<color=#ff5500><b>{message}</b></color>\n\n" + resultText.text;
+        currentStatusMsg = message;
+        UpdateCartUI();
     }
 
     [Serializable]

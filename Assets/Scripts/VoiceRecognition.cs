@@ -165,11 +165,19 @@ public class VoiceRecognition : MonoBehaviour
         {
             uiText += "<color=#333333><b>=== 🛒 주문 목록 ===</b></color>\n\n";
 
+            int finalTotalSum = 0;
+
             for (int i = 0; i < shoppingCart.Count; i++)
             {
                 uiText += $"<color=#0055ff>{i + 1}.</color> {shoppingCart[i].displayText}\n";
                 uiText += $"<size=60%><color=#888888>   데이터: {shoppingCart[i].finalDataFormat}</color></size>\n\n";
+
+                finalTotalSum += shoppingCart[i].totalPrice;
             }
+
+            string formattedTotal = string.Format("{0:#,0}", finalTotalSum);
+            uiText += "---------------------------------\n";
+            uiText += $"<size=120%><color=#e60000><b>💰 총 결제 금액: {formattedTotal}원</b></color></size>\n";
         }
 
         resultText.text = uiText;

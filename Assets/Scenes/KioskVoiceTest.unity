@@ -7023,7 +7023,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0.00035732123}
-  m_SizeDelta: {x: 0, y: 35.21}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &583899539
 MonoBehaviour:
@@ -7780,8 +7780,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 201.5, y: -17.605}
-  m_SizeDelta: {x: 403, y: 35.21}
+  m_AnchoredPosition: {x: 201.5, y: 0}
+  m_SizeDelta: {x: 403, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &691440963
 CanvasRenderer:
@@ -7811,7 +7811,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Result Text
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 758026a068eef664e8f77d93aff88962, type: 2}
   m_sharedMaterial: {fileID: 1650427501849087345, guid: 758026a068eef664e8f77d93aff88962, type: 2}
@@ -19316,7 +19316,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 475, y: 140}
-  m_SizeDelta: {x: 420, y: 300}
+  m_SizeDelta: {x: 420, y: 420}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1447130728
 MonoBehaviour:
@@ -19361,7 +19361,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -27344,8 +27344,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::VoiceRecognition
   resultText: {fileID: 691440964}
   recordButton: {fileID: 1867150537}
-  clientId: re9inh6lik
-  clientSecret: 7X5WkxFBibrMIX8toNWtFqUqiLdusGieA9VuWOSy
+  clientId: 
+  clientSecret: 
   useTestAudio: 0
   testAudioClip: {fileID: 8300000, guid: 06e7bc6a4889da6418dee14ca7748541, type: 3}
 --- !u!4 &1969881590
